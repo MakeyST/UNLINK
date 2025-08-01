@@ -24,7 +24,7 @@ def create_one_time_link(filename):
     link_id = str(uuid.uuid4())
     links[link_id] = filename
     save_links(links)
-    return f"http://localhost:5000/download/{link_id}"  # Замени домен
+    return f"https://hwidmakey.duckdns.org/download/{link_id}"
 
 def log_download(link_id, filename):
     ip = request.remote_addr or 'Unknown IP'
