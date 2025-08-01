@@ -46,7 +46,7 @@ def create_one_time_link(filename):
     link_id = secrets.token_urlsafe(32)
     links[link_id] = filename
     save_links(links)
-    return f"http://hwidmakey.duckdns.org/download/{link_id}"
+    return f"https://hwidmakey.duckdns.org/download/{link_id}"
 
 
 def log_access(link_id, filename, ip, user_agent_str, device, os_family, os_version, browser_family, browser_version,
