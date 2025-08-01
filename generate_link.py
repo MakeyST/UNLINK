@@ -1,4 +1,5 @@
 import os
+import sys
 from app import create_one_time_link
 
 FILES = {
@@ -8,22 +9,22 @@ FILES = {
 
 
 def main():
-    print("Выберите файл для генерации одноразовой ссылки:")
-    print("0 - Makey_HWID_LifeTime.rar")
-    print("1 - Makey_HWID_1_use.rar")
+    if len(sys.argv) < 2:
+        print("❌ Укажите аргумент: 0 или 1")
+        sys.exit(1)
 
-    choice = input("Введите 0 или 1: ").strip()
+    choice = sys.argv[1].strip()
 
     if choice not in FILES:
-        print("Неверный выбор.")
-        return
+        print("❌ Неверный выбор. Допустимо: 0 или 1")
+        sys.exit(1)
 
     filename = FILES[choice]
     filepath = os.path.join('./uploads', filename)
 
     if not os.path.exists(filepath):
-        print(f"Файл '{filename}' не найден в папке ./uploads")
-        return
+        print(f"❌ Файл '{filename}' не найден в папке ./uploads")
+        sys.exit(1)
 
     link = create_one_time_link(filename)
     print("\n✅ Одноразовая ссылка создана:\n")
