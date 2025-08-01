@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    environment {
+        VENV_PATH = "${WORKSPACE}/venv"
+    }
+
+    stages {
+        stage('Подготовка окружения') {
+            steps {
+                sh '''
+                python3 -m venv $VENV_PATH
+                source $VENV_PATH/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Запуск приложения') {
+            steps {
+                sh '''
+                source $VENV_PATH/bin/activate
+                pkill gunicorn || true
+                nohup gunicorn --workers 3 --bind 127.0.0.1:5000 wsgi:app > gunicorn.log 2>&1 &
+                '''
+            }
+        }
+    }
+}
