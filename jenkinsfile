@@ -17,9 +17,10 @@ pipeline {
             }
         }
 
-        stage('Запуск приложения') {
+        stage('Перезапуск gunicorn') {
             steps {
                 sh '''
+                    pkill -f gunicorn || true
                     . venv/bin/activate
                     nohup gunicorn -w 4 -b 0.0.0.0:5000 wsgi:app > app.log 2>&1 &
                 '''
